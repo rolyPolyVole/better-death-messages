@@ -1,5 +1,8 @@
-# enum | "everyone" or "within-radius"
+# Whether to announce villager deaths globally or within an announcement radius.
+# 'everyone'
+# 'within-radius'
 announce-to: "everyone"
 
-# int | Radius in blocks
-announce-radius: 1000
+# The circular radius in blocks around a villager within which players will see the death message.
+# Only works when 'announce-to' is set to 'within-radius'.
+announcement-radius: 1000

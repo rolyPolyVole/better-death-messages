@@ -1,4 +1,5 @@
-name: VillagerDeaths
+name: VillagerDeathMessagesPlugin
+description: "A very simple plugin which displays death messages for villagers."
 version: '${version}'
-main: org.rolypolyvole.villagerdeaths.VillagerDeaths
+main: org.rolypolyvole.villagerdeaths.VillagerDeathMessagesPlugin
 api-version: '1.20'
