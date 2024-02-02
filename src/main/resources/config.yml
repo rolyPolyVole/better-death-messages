@@ -1,6 +1,6 @@
 # Whether to announce villager deaths globally or within an announcement radius.
-# 'everyone'
-# 'within-radius'
+# 'everyone': announce to all players on the server.
+# 'within-radius': announce to all players within a radius.
 announce-to: "everyone"
 
 # The circular radius in blocks around a villager within which players will see the death message.

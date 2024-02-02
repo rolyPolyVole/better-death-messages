@@ -58,7 +58,9 @@ public class VillagerDeathListener implements Listener {
             DamageSource damageSource = nmsVillager.getLastDamageSource();
             assert damageSource != null;
 
-            Component deathMessage = damageSource.getLocalizedDeathMessage(nmsVillager);
+            Location deathLocation = villager.getLocation();
+
+            Component deathMessage = damageSource.getLocalizedDeathMessage(nmsVillager).copy().append(" at (" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")");
             TextComponent message = net.kyori.adventure.text.Component.text(deathMessage.getString());
 
             boolean announceToAll = Objects.equals(plugin.getConfig().getString("announce-to"), "everyone");
@@ -66,12 +68,10 @@ public class VillagerDeathListener implements Listener {
             if (announceToAll) {
                 Bukkit.broadcast(message);
             } else {
-                Location location = villager.getLocation();
+                int announcementRadius = Math.abs(plugin.getConfig().getInt("announcement-radius"));
 
-                for (Player player : location.getWorld().getPlayers()) {
-                    int announcementRadius = Math.abs(plugin.getConfig().getInt("announcement-radius"));
-
-                    if (location.distance(player.getLocation()) <= announcementRadius) {
+                for (Player player : deathLocation.getWorld().getPlayers()) {
+                    if (deathLocation.distance(player.getLocation()) <= announcementRadius) {
                         player.sendMessage(message);
                     }
                 }
