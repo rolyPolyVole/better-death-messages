@@ -2,7 +2,6 @@ package org.rolypolyvole.villagerdeaths.event;
 
 import net.kyori.adventure.text.TextComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.damagesource.DamageSource;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -55,12 +54,9 @@ public class VillagerDeathListener implements Listener {
                 throw new RuntimeException(exception);
             }
 
-            DamageSource damageSource = nmsVillager.getLastDamageSource();
-            assert damageSource != null;
-
             Location deathLocation = villager.getLocation();
 
-            Component deathMessage = damageSource.getLocalizedDeathMessage(nmsVillager).copy().append(" at (" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")");
+            Component deathMessage = nmsVillager.getCombatTracker().getDeathMessage().copy().append(" at (" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")");
             TextComponent message = net.kyori.adventure.text.Component.text(deathMessage.getString());
 
             boolean announceToAll = Objects.equals(plugin.getConfig().getString("announce-to"), "everyone");
