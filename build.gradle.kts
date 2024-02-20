@@ -5,6 +5,10 @@ plugins {
     id("io.papermc.paperweight.userdev") version "1.5.5"
 }
 
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
 group = "org.rolypolyvole"
 version = "1.0-SNAPSHOT"
 description = "A very simple plugin which displays death messages for villagers."
@@ -26,29 +30,6 @@ dependencies {
 }
 
 tasks {
-    processResources {
-        filteringCharset = Charsets.UTF_8.name()
-
-        val props = mapOf(
-                "name" to project.name,
-                "version" to project.version,
-                "description" to project.description,
-                "apiVersion" to "1.20"
-        )
-
-        inputs.properties(props)
-
-        filesMatching("plugin.yml") {
-            expand(props)
-        }
-    }
-}
-
-tasks {
-    assemble {
-        dependsOn(reobfJar)
-    }
-
     compileJava {
         options.encoding = Charsets.UTF_8.name()
         options.release.set(17)
@@ -73,6 +54,10 @@ tasks {
         filesMatching("plugin.yml") {
             expand(props)
         }
+    }
+
+    assemble {
+        dependsOn(reobfJar)
     }
 }
 
