@@ -3,6 +3,7 @@ plugins {
     application
 
     id("io.papermc.paperweight.userdev") version "1.5.5"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 java {
@@ -25,8 +26,9 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
-
     paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
+
+    implementation("net.dv8tion:JDA:5.0.0-beta.20")
 }
 
 tasks {
@@ -58,6 +60,20 @@ tasks {
 
     assemble {
         dependsOn(reobfJar)
+    }
+
+    build {
+        dependsOn(shadowJar)
+    }
+
+    assemble {
+        dependsOn(reobfJar)
+    }
+
+    shadowJar {
+        fun reloc(pkg: String) = relocate(pkg, "org.rolypolyvole.villagerdeaths.shaded.$pkg")
+
+        reloc("net.dv8tion")
     }
 }
 

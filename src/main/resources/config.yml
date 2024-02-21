@@ -6,3 +6,12 @@ announce-to: "everyone"
 # The circular radius in blocks around a villager within which players will see the death message.
 # Only works when 'announce-to' is set to 'within-radius'.
 announcement-radius: 1000
+
+discord-messages:
+  {
+    enabled: true,
+
+    bot-token: "",
+
+    channel-id: ""
+  }
