@@ -4,10 +4,13 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
+import net.kyori.adventure.text.ComponentBuilder;
 import net.kyori.adventure.text.TextComponent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -61,10 +64,20 @@ public class VillagerDeathListener implements Listener {
 
             Location deathLocation = villager.getLocation();
 
-            Component deathMessage = nmsVillager.getCombatTracker().getDeathMessage().copy().append(" at (" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")");
-            TextComponent message = net.kyori.adventure.text.Component.text(deathMessage.getString());
+            MutableComponent deathMessage = nmsVillager.getCombatTracker().getDeathMessage().copy();
 
             YamlConfiguration configuration = (YamlConfiguration) plugin.getConfig();
+
+            ConfigurationSection messageSettings = configuration.getConfigurationSection("messages");
+            assert messageSettings != null;
+
+            boolean includeCoordinates = messageSettings.getBoolean("include-coordinates");
+
+            TextComponent message = net.kyori.adventure.text.Component.text(deathMessage.getString());
+
+            if (includeCoordinates) {
+                deathMessage.append(Component.literal("@ (" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")"));
+            }
 
             boolean announceToAll = Objects.equals(configuration.getString("announce-to"), "everyone");
 
@@ -82,7 +95,7 @@ public class VillagerDeathListener implements Listener {
                 }
             }
 
-            String channelId = configuration.getString("discord-messages.channel-id");
+            String channelId = messageSettings.getString("discord-messages.channel-id");
             assert channelId != null;
 
             JDA jda = plugin.getJda();

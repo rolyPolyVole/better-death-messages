@@ -7,11 +7,9 @@ announce-to: "everyone"
 # Only works when 'announce-to' is set to 'within-radius'.
 announcement-radius: 1000
 
-discord-messages:
-  {
-    enabled: true,
-
-    bot-token: "",
-
-    channel-id: ""
-  }
+messages:
+  include-coordinates: true
+  discord-messages:
+      enabled: false
+      bot-token: ""
+      channel-id: ""

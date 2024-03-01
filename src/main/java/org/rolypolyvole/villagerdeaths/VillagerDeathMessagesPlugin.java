@@ -22,7 +22,7 @@ public final class VillagerDeathMessagesPlugin extends JavaPlugin {
         configuration.options().copyDefaults();
         saveDefaultConfig();
 
-        String token = configuration.getString("discord-messages.bot-token");
+        String token = configuration.getString("messages.discord-messages.bot-token");
 
         JDABuilder jdaBuilder = JDABuilder.createDefault(token);
 
