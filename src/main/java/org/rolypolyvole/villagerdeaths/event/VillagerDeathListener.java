@@ -4,10 +4,10 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
-import net.kyori.adventure.text.ComponentBuilder;
 import net.kyori.adventure.text.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -83,14 +83,21 @@ public class VillagerDeathListener implements Listener {
 
             Bukkit.getLogger().info("message = " + message);
 
-            if (announceToAll) {
-                Bukkit.broadcast(message);
-            } else {
-                int announcementRadius = Math.abs(configuration.getInt("announcement-radius"));
+            int announcementRadius = Math.abs(configuration.getInt("announcement-radius"));
 
-                for (Player player : deathLocation.getWorld().getPlayers()) {
-                    if (deathLocation.distance(player.getLocation()) <= announcementRadius) {
-                        player.sendMessage(message);
+            for (Player player : deathLocation.getWorld().getPlayers()) {
+                if (announceToAll || deathLocation.distance(player.getLocation()) <= announcementRadius) {
+                    try {
+                        Method getPlayerHandle = player.getClass().getMethod("getHandle");
+
+                        ServerPlayer serverPlayer = (ServerPlayer) getPlayerHandle.invoke(player);
+
+                        serverPlayer.displayClientMessage(
+                                deathMessage,
+                                false // Whether the message is an action bar message
+                        );
+                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException exception) {
+                        throw new RuntimeException(exception);
                     }
                 }
             }
