@@ -7,13 +7,20 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.rolypolyvole.better_death_messages.event.EntityDeathListener;
+import org.rolypolyvole.better_death_messages.manager.EntityManager;
 
 public final class BetterDeathMessagesPlugin extends JavaPlugin {
 
     private JDA jda;
 
+    private EntityManager entityManager;
+
     public JDA getJda() {
         return jda;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     @Override
@@ -39,6 +46,8 @@ public final class BetterDeathMessagesPlugin extends JavaPlugin {
                 throw new RuntimeException(exception);
             }
         }
+
+        entityManager = new EntityManager(this);
 
         Bukkit.getPluginManager().registerEvents(new EntityDeathListener(this), this);
     }
