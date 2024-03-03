@@ -79,13 +79,11 @@ public class EntityDeathListener implements Listener {
 
         boolean includeCoordinates = messageSettings.getBoolean("include-coordinates");
 
-        String deathMessageString = deathMessage.getString();
-
-        TextComponent message = net.kyori.adventure.text.Component.text(deathMessageString);
-
         if (includeCoordinates) {
             deathMessage.append(Component.literal(" @ (" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")"));
         }
+
+        String deathMessageString = deathMessage.getString();
 
         boolean announceToAll = Objects.equals(configuration.getString("announce-to"), "everyone");
 
@@ -126,8 +124,6 @@ public class EntityDeathListener implements Listener {
         TextChannel textChannel = jda.getChannelById(TextChannel.class, channelId);
         assert textChannel != null;
 
-        String messageString = message.content();
-
         MessageCreateAction messageCreateAction = textChannel.sendMessageEmbeds(new MessageEmbed(
                 null,
                 null,
@@ -137,7 +133,7 @@ public class EntityDeathListener implements Listener {
                 0,
                 null,
                 null,
-                new MessageEmbed.AuthorInfo(messageString, null, null, null),
+                new MessageEmbed.AuthorInfo(deathMessageString, null, null, null),
                 null,
                 null,
                 null,
