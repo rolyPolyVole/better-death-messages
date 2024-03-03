@@ -93,6 +93,10 @@ public class EntityDeathListener implements Listener {
 
         for (Player player : deathLocation.getWorld().getPlayers()) {
             if (announceToAll || deathLocation.distance(player.getLocation()) <= announcementRadius) {
+                if (entity instanceof Tameable tameableEntity && player.equals(tameableEntity.getOwner())) {
+                    continue;
+                }
+
                 try {
                     Method getPlayerHandle = player.getClass().getMethod("getHandle");
 
