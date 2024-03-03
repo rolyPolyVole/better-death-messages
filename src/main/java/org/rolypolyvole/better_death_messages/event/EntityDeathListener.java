@@ -89,8 +89,6 @@ public class EntityDeathListener implements Listener {
 
         boolean announceToAll = Objects.equals(configuration.getString("announce-to"), "everyone");
 
-        Bukkit.getLogger().info("message = " + message);
-
         int announcementRadius = Math.abs(configuration.getInt("announcement-radius"));
 
         for (Player player : deathLocation.getWorld().getPlayers()) {
