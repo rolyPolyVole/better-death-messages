@@ -121,6 +121,10 @@ public class EntityDeathListener implements Listener {
 
         JDA jda = plugin.getJda();
 
+        if (jda == null) {
+            return;
+        }
+
         TextChannel textChannel = jda.getChannelById(TextChannel.class, channelId);
         assert textChannel != null;
 
