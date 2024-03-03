@@ -1,4 +1,4 @@
-package org.rolypolyvole.villagerdeaths.event;
+package org.rolypolyvole.better_death_messages.event;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -12,16 +12,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.NotNull;
-import org.rolypolyvole.villagerdeaths.DeathMessagesPlugin;
+import org.rolypolyvole.better_death_messages.BetterDeathMessagesPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,9 +26,9 @@ import java.util.Objects;
 
 public class EntityDeathListener implements Listener {
 
-    private final DeathMessagesPlugin plugin;
+    private final BetterDeathMessagesPlugin plugin;
 
-    public EntityDeathListener(DeathMessagesPlugin plugin) {
+    public EntityDeathListener(BetterDeathMessagesPlugin plugin) {
         this.plugin = plugin;
     }
 

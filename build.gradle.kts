@@ -12,7 +12,7 @@ java {
 
 group = "org.rolypolyvole"
 version = "1.0-SNAPSHOT"
-description = "A very simple plugin which displays death messages for villagers."
+description = "A very simple plugin which displays death messages for important entities."
 
 repositories {
     mavenCentral()
@@ -71,12 +71,12 @@ tasks {
     }
 
     shadowJar {
-        fun reloc(pkg: String) = relocate(pkg, "org.rolypolyvole.villagerdeaths.shaded.$pkg")
+        fun reloc(pkg: String) = relocate(pkg, "org.rolypolyvole.better_death_messages.shaded.$pkg")
 
         reloc("net.dv8tion")
     }
 }
 
 application {
-    mainClass.set("VillagerDeathMessagesPlugin")
+    mainClass.set("BetterDeathMessagesPlugin")
 }
