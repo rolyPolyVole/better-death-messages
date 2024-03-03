@@ -1,8 +1,8 @@
-name: VillagerDeathMessagesPlugin
+name: DeathMessagesPlugin
 description: "A very simple plugin which displays death messages for villagers."
 version: '1.0'
 authors: ["rolyPolyVole", "Slqmy"]
-main: org.rolypolyvole.villagerdeaths.VillagerDeathMessagesPlugin
+main: org.rolypolyvole.villagerdeaths.DeathMessagesPlugin
 api-version: '1.20'
 load: POSTWORLD
 dependencies:

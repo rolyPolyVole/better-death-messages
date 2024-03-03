@@ -7,6 +7,16 @@ announce-to: "everyone"
 # Only works when 'announce-to' is set to 'within-radius'.
 announcement-radius: 1000
 
+death-messages:
+  villagers:
+    enabled: true
+  wandering-traders:
+    enabled: true
+  named-entities:
+    enabled: true
+  pets:
+    enabled: true
+
 messages:
   include-coordinates: true
   discord-messages:
