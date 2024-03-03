@@ -79,7 +79,9 @@ public class EntityDeathListener implements Listener {
 
         boolean includeCoordinates = messageSettings.getBoolean("include-coordinates");
 
-        TextComponent message = net.kyori.adventure.text.Component.text(deathMessage.getString());
+        String deathMessageString = deathMessage.getString();
+
+        TextComponent message = net.kyori.adventure.text.Component.text(deathMessageString);
 
         if (includeCoordinates) {
             deathMessage.append(Component.literal(" @ (" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")"));
@@ -111,6 +113,8 @@ public class EntityDeathListener implements Listener {
                 }
             }
         }
+
+        plugin.getLogger().info(deathMessageString);
 
         String channelId = messageSettings.getString("discord-messages.channel-id");
         assert channelId != null;
