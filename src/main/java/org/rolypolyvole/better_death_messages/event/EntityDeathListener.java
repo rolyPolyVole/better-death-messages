@@ -14,6 +14,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -34,6 +35,12 @@ public class EntityDeathListener implements Listener {
 
     @EventHandler
     public void onVillagerDeath(@NotNull EntityDeathEvent event) {
+        LivingEntity entity = event.getEntity();
+
+        if (!plugin.getEntityManager().shouldDeathBeAnnounced(entity)) {
+            return;
+        }
+
         String serverClassPackageName = Bukkit.getServer().getClass().getPackage().getName();
         String version = serverClassPackageName.substring(serverClassPackageName.lastIndexOf('.') + 1);
 
@@ -52,8 +59,6 @@ public class EntityDeathListener implements Listener {
         } catch (NoSuchMethodException exception) {
             throw new RuntimeException(exception);
         }
-
-        LivingEntity entity = event.getEntity();
 
         net.minecraft.world.entity.LivingEntity nmsEntity;
 
