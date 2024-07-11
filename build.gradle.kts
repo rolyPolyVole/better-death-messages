@@ -66,10 +66,6 @@ tasks {
         dependsOn(shadowJar)
     }
 
-    assemble {
-        dependsOn(reobfJar)
-    }
-
     shadowJar {
         fun reloc(pkg: String) = relocate(pkg, "org.rolypolyvole.better_death_messages.shaded.$pkg")
 
