@@ -65,12 +65,6 @@ tasks {
     build {
         dependsOn(shadowJar)
     }
-
-    shadowJar {
-        fun reloc(pkg: String) = relocate(pkg, "org.rolypolyvole.better_death_messages.shaded.$pkg")
-
-        reloc("net.dv8tion")
-    }
 }
 
 tasks.withType<JavaCompile> {
