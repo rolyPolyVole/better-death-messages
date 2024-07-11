@@ -34,7 +34,7 @@ dependencies {
 tasks {
     compileJava {
         options.encoding = Charsets.UTF_8.name()
-        options.release.set(17)
+        options.release.set(22)
     }
 
     javadoc {
@@ -71,6 +71,10 @@ tasks {
 
         reloc("net.dv8tion")
     }
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(22)
 }
 
 application {
