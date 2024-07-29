@@ -51,8 +51,10 @@ public class EntityDeathListener implements Listener {
 
         boolean includeCoordinates = messageSettings.getBoolean("include-coordinates");
 
+        String locationString = "(" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")";
+
         if (includeCoordinates) {
-            deathMessage = Component.literal("(" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + "): ").append(deathMessage);
+            deathMessage = Component.literal(locationString + ": ").append(deathMessage);
         }
 
         String deathMessageString = deathMessage.getString();
@@ -64,6 +66,9 @@ public class EntityDeathListener implements Listener {
         for (Player player : deathLocation.getWorld().getPlayers()) {
             if (announceToAll || deathLocation.distance(player.getLocation()) <= announcementRadius) {
                 if (entity instanceof Tameable tameableEntity && player.equals(tameableEntity.getOwner())) {
+                    if (includeCoordinates) {
+                        player.sendMessage(locationString);
+                    }
                     continue;
                 }
 
