@@ -12,9 +12,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.entity.Cat;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Parrot;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -66,10 +69,10 @@ public class EntityDeathListener implements Listener {
         for (Player player : deathLocation.getWorld().getPlayers()) {
             if (announceToAll || deathLocation.distance(player.getLocation()) <= announcementRadius) {
                 if (entity instanceof Tameable tameableEntity && player.equals(tameableEntity.getOwner())) {
-                    if (includeCoordinates) {
+                    if (includeCoordinates && (tameableEntity instanceof Parrot || tameableEntity instanceof Cat || tameableEntity instanceof Wolf)) {
                         player.sendMessage(locationString);
+                        continue;
                     }
-                    continue;
                 }
 
                 ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
