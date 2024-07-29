@@ -7,10 +7,10 @@ import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
@@ -40,38 +40,12 @@ public class EntityDeathListener implements Listener {
             return;
         }
 
-        String serverClassPackageName = Bukkit.getServer().getClass().getPackage().getName();
-        String version = serverClassPackageName.substring(serverClassPackageName.lastIndexOf('.') + 1);
-
-        Class<?> craftEntity;
-
-        try {
-            craftEntity = Class.forName("org.bukkit.craftbukkit." + version + ".entity.CraftEntity");
-        } catch (ClassNotFoundException exception) {
-            throw new RuntimeException(exception);
-        }
-
-        Method getHandle;
-
-        try {
-            getHandle = craftEntity.getMethod("getHandle");
-        } catch (NoSuchMethodException exception) {
-            throw new RuntimeException(exception);
-        }
-
-        net.minecraft.world.entity.LivingEntity nmsEntity;
-
-        try {
-            nmsEntity = (net.minecraft.world.entity.LivingEntity) getHandle.invoke(entity);
-        } catch (IllegalAccessException | InvocationTargetException exception) {
-            throw new RuntimeException(exception);
-        }
-
-        Location deathLocation = entity.getLocation();
-
+        net.minecraft.world.entity.LivingEntity nmsEntity = ((CraftLivingEntity) entity).getHandle();
         MutableComponent deathMessage = nmsEntity.getCombatTracker().getDeathMessage().copy();
 
         YamlConfiguration configuration = (YamlConfiguration) plugin.getConfig();
+
+        Location deathLocation = entity.getLocation();
 
         ConfigurationSection messageSettings = configuration.getConfigurationSection("messages");
         assert messageSettings != null;
