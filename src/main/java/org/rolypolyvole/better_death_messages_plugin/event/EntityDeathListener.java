@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
@@ -20,8 +21,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.NotNull;
 import org.rolypolyvole.better_death_messages_plugin.BetterDeathMessagesPlugin;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Objects;
 
 public class EntityDeathListener implements Listener {
@@ -68,18 +67,12 @@ public class EntityDeathListener implements Listener {
                     continue;
                 }
 
-                try {
-                    Method getPlayerHandle = player.getClass().getMethod("getHandle");
+                ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
 
-                    ServerPlayer serverPlayer = (ServerPlayer) getPlayerHandle.invoke(player);
-
-                    serverPlayer.displayClientMessage(
-                            deathMessage,
-                            false // Whether the message is an action bar message
-                    );
-                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException exception) {
-                    throw new RuntimeException(exception);
-                }
+                serverPlayer.displayClientMessage(
+                        deathMessage,
+                        false // Whether the message is an action bar message
+                );
             }
         }
 
@@ -110,8 +103,7 @@ public class EntityDeathListener implements Listener {
                 null,
                 null,
                 null,
-                null
-        ));
+                null));
 
         messageCreateAction.submit();
     }
