@@ -1,4 +1,4 @@
-package org.rolypolyvole.better_death_messages.event;
+package org.rolypolyvole.better_death_messages_plugin.event;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -18,7 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.jetbrains.annotations.NotNull;
-import org.rolypolyvole.better_death_messages.BetterDeathMessagesPlugin;
+import org.rolypolyvole.better_death_messages_plugin.BetterDeathMessagesPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

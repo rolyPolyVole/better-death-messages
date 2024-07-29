@@ -1,4 +1,4 @@
-package org.rolypolyvole.better_death_messages;
+package org.rolypolyvole.better_death_messages_plugin;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.rolypolyvole.better_death_messages.event.EntityDeathListener;
-import org.rolypolyvole.better_death_messages.manager.EntityManager;
+import org.rolypolyvole.better_death_messages_plugin.event.EntityDeathListener;
+import org.rolypolyvole.better_death_messages_plugin.manager.EntityManager;
 
 public final class BetterDeathMessagesPlugin extends JavaPlugin {
 

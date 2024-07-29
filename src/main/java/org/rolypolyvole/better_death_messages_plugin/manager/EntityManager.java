@@ -1,4 +1,4 @@
-package org.rolypolyvole.better_death_messages.manager;
+package org.rolypolyvole.better_death_messages_plugin.manager;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.WanderingTrader;
-import org.rolypolyvole.better_death_messages.BetterDeathMessagesPlugin;
+import org.rolypolyvole.better_death_messages_plugin.BetterDeathMessagesPlugin;
 
 public class EntityManager {
 

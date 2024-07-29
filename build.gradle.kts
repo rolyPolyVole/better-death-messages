@@ -1,76 +1,78 @@
-plugins {
-    java
-    application
+import xyz.jpenilla.resourcefactory.bukkit.BukkitPluginYaml
 
-    id("io.papermc.paperweight.userdev") version "1.7.1"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+plugins {
+  `java-library`
+  id("io.papermc.paperweight.userdev") version "1.7.1"
+  id("xyz.jpenilla.run-paper") version "2.3.0"
+  id("xyz.jpenilla.resource-factory-bukkit-convention") version "1.1.1"
 }
+
+val groupStringSeparator = "."
+val kebabcaseStringSeparator = "-"
+val snakecaseStringSeparator = "_"
+
+fun capitaliseFirstLetter(string: String): String {
+  return string.first().uppercase() + string.slice(IntRange(1, string.length - 1))
+}
+
+fun snakecase(kebabcaseString: String): String {
+  return kebabcaseString.lowercase().replace(kebabcaseStringSeparator, snakecaseStringSeparator)
+}
+
+fun pascalcase(kebabcaseString: String): String {
+  var pascalCaseString = ""
+
+  val splitString = kebabcaseString.split(kebabcaseStringSeparator)
+
+  for (part in splitString) {
+    pascalCaseString += capitaliseFirstLetter(part)
+  }
+
+  return pascalCaseString
+}
+
+val mainProjectAuthor = "rolyPolyVole"
+val topLevelDomain = "org"
+val projectAuthors = listOfNotNull(mainProjectAuthor, "Slqmy")
+
+group = topLevelDomain + groupStringSeparator + mainProjectAuthor.lowercase() + groupStringSeparator + snakecase(rootProject.name)
+version = "1.0.0-SNAPSHOT"
+description = "A very simple plugin which displays death messages for important entities."
+
+val javaVersion = 21
+val paperApiVersion = "1.21"
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(22))
+  toolchain.languageVersion = JavaLanguageVersion.of(javaVersion)
 }
-
-group = "org.rolypolyvole"
-version = "1.0-SNAPSHOT"
-description = "A very simple plugin which displays death messages for important entities."
 
 repositories {
     mavenCentral()
-
     mavenLocal()
 
     maven("https://repo.papermc.io/repository/maven-public/")
-
     maven("https://oss.sonatype.org/content/groups/public/")
 }
 
 dependencies {
-    compileOnly("io.papermc.paper", "paper-api", "1.20.4-R0.1-SNAPSHOT")
-    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
+  paperweight.paperDevBundle(paperApiVersion + "-R0.1-SNAPSHOT")
 
-    implementation("net.dv8tion", "JDA", "5.0.0")
+  implementation("net.dv8tion", "JDA", "5.0.0")
 }
 
 tasks {
-    compileJava {
-        options.encoding = Charsets.UTF_8.name()
-        options.release.set(22)
-    }
+  compileJava {
+    options.release = javaVersion
+  }
 
-    javadoc {
-        options.encoding = Charsets.UTF_8.name()
-    }
-
-    processResources {
-        filteringCharset = Charsets.UTF_8.name()
-
-        val props = mapOf(
-                "name" to project.name,
-                "version" to project.version,
-                "description" to project.description,
-                "apiVersion" to "1.20"
-        )
-
-        inputs.properties(props)
-
-        filesMatching("plugin.yml") {
-            expand(props)
-        }
-    }
-
-    assemble {
-        dependsOn(reobfJar)
-    }
-
-    build {
-        dependsOn(shadowJar)
-    }
+  javadoc {
+    options.encoding = Charsets.UTF_8.name()
+  }
 }
 
-tasks.withType<JavaCompile> {
-    options.release.set(22)
-}
-
-application {
-    mainClass.set("BetterDeathMessagesPlugin")
+bukkitPluginYaml {
+  main = project.group.toString() + groupStringSeparator + pascalcase(rootProject.name)
+  load = BukkitPluginYaml.PluginLoadOrder.STARTUP
+  authors = projectAuthors
+  apiVersion = paperApiVersion
 }
