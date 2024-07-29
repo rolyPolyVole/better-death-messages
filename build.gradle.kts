@@ -5,6 +5,7 @@ plugins {
   id("io.papermc.paperweight.userdev") version "1.7.1"
   id("xyz.jpenilla.run-paper") version "2.3.0"
   id("xyz.jpenilla.resource-factory-bukkit-convention") version "1.1.1"
+  id("io.github.goooler.shadow") version "8.1.7"
 }
 
 val groupStringSeparator = "."
