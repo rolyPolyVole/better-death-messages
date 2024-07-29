@@ -52,7 +52,7 @@ public class EntityDeathListener implements Listener {
         boolean includeCoordinates = messageSettings.getBoolean("include-coordinates");
 
         if (includeCoordinates) {
-            deathMessage.append(Component.literal(" @ (" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + ")"));
+            deathMessage = Component.literal("(" + deathLocation.getBlockX() + ", " + deathLocation.getBlockY() + ", " + deathLocation.getBlockZ() + "): ").append(deathMessage);
         }
 
         String deathMessageString = deathMessage.getString();
