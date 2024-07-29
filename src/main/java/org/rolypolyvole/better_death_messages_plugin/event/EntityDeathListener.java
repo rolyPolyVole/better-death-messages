@@ -35,7 +35,7 @@ public class EntityDeathListener implements Listener {
     }
 
     @EventHandler
-    public void onVillagerDeath(@NotNull EntityDeathEvent event) {
+    public void onEntityDeath(@NotNull EntityDeathEvent event) {
         LivingEntity entity = event.getEntity();
 
         if (!plugin.getEntityManager().shouldDeathBeAnnounced(entity)) {
