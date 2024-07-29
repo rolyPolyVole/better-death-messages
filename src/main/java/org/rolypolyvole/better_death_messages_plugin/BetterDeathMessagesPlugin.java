@@ -3,9 +3,11 @@ package org.rolypolyvole.better_death_messages_plugin;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.rolypolyvole.better_death_messages_plugin.event.EntityDamageListener;
 import org.rolypolyvole.better_death_messages_plugin.event.EntityDeathListener;
 import org.rolypolyvole.better_death_messages_plugin.manager.EntityManager;
 
@@ -15,12 +17,18 @@ public final class BetterDeathMessagesPlugin extends JavaPlugin {
 
     private EntityManager entityManager;
 
+    private NamespacedKey shouldAnnounceEntityDeathKey = new NamespacedKey(this, "should_announce_death");
+
     public JDA getJda() {
         return jda;
     }
 
     public EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    public NamespacedKey getShouldAnnounceEntityDeathKey() {
+        return shouldAnnounceEntityDeathKey;
     }
 
     @Override
@@ -50,5 +58,6 @@ public final class BetterDeathMessagesPlugin extends JavaPlugin {
         entityManager = new EntityManager(this);
 
         Bukkit.getPluginManager().registerEvents(new EntityDeathListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new EntityDamageListener(this), this);
     }
 }

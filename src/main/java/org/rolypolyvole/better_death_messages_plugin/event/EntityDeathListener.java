@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
+
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -68,13 +69,6 @@ public class EntityDeathListener implements Listener {
 
         for (Player player : deathLocation.getWorld().getPlayers()) {
             if (announceToAll || deathLocation.distance(player.getLocation()) <= announcementRadius) {
-                if (entity instanceof Tameable tameableEntity && player.equals(tameableEntity.getOwner())) {
-                    if (includeCoordinates && (tameableEntity instanceof Parrot || tameableEntity instanceof Cat || tameableEntity instanceof Wolf)) {
-                        player.sendMessage(locationString);
-                        continue;
-                    }
-                }
-
                 ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
 
                 serverPlayer.displayClientMessage(
